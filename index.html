@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İzmir Seaside Recommender</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0f2f1; /* Coastal light blue */
+            color: #004d40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 { color: #00796b; font-size: 1.5rem; margin-bottom: 1.5rem; }
+        label { display: block; margin: 10px 0 5px; font-weight: bold; text-align: left; }
+        select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #b2dfdb;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00897b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #00695c; }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f1f8e9;
+            font-weight: bold;
+            display: none;
+            border-left: 5px solid #00897b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌊 İzmir Seaside Guide</h1>
+    
+    <label for="wind">Wind State:</label>
+    <select id="wind">
+        <option value="Strong">Strong</option>
+        <option value="Calm">Calm</option>
+        <option value="Still">Still</option>
+    </select>
+
+    <label for="activity">Planned Activity:</label>
+    <select id="activity">
+        <option value="Surfing">Surfing</option>
+        <option value="Walking">Walking</option>
+        <option value="Swimming">Swimming</option>
+    </select>
+
+    <label for="transport">Transportation:</label>
+    <select id="transport">
+        <option value="Car">Car</option>
+        <option value="Ferry">Ferry</option>
+        <option value="Public">Public Transport</option>
+    </select>
+
+    <button onclick="getRecommendation()">Find My Spot</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function getRecommendation() {
+        const wind = document.getElementById('wind').value;
+        const activity = document.getElementById('activity').value;
+        const transport = document.getElementById('transport').value;
+        const resultDiv = document.getElementById('result');
+        let recommendation = "";
+
+        // The Logic Matrix from your Diagram
+        if (wind === "Strong") {
+            if (activity === "Surfing") recommendation = "Çeşme (Perfect for high-wind waves!)";
+            else recommendation = "Alsancak (Better stay near sheltered cafes in Kordon.)";
+        } 
+        else if (wind === "Calm") {
+            if (transport === "Ferry") recommendation = "Bostanlı (Enjoy the sea breeze on the deck!)";
+            else if (transport === "Car") recommendation = "Urla (Great for a quiet drive to the coast.)";
+            else recommendation = "Old Foça (A nostalgic trip via public transport.)";
+        } 
+        else if (wind === "Still") {
+            if (transport === "Ferry") recommendation = "Kordon (Perfectly flat water for a sunset view.)";
+            else if (transport === "Car") recommendation = "Çeşme (Ideal for a still night by the marina.)";
+            else recommendation = "Bornova (No wind? Head to the lively streets of Küçükpark.)";
+        }
+
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = "Recommendation: " + recommendation;
+    }
+</script>
+
+</body>
+</html>
